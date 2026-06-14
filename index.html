@@ -5,12 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>مترجم صوتي</title>
 <meta name="theme-color" content="#020b2e">
-<link rel="manifest" href="manifest.json">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="مترجم صوتي">
-<link rel="apple-touch-icon" href="icon-192.png">
 <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Tajawal:wght@300;400;500;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -173,10 +167,32 @@ body{
   <!-- HEADER -->
   <div class="header">
     <div class="crown-ring">
-      <span style="font-size:44px;filter:drop-shadow(0 0 16px var(--gold-bright));">🌐</span>
+      <svg viewBox="0 0 100 100" width="64" height="64" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 0 14px #ffd700) drop-shadow(0 0 30px rgba(255,215,0,0.7));overflow:visible;">
+        <style>
+          .cs-group{transform-origin:50px 50px;animation:cs-dance 3s ease-in-out infinite;}
+          @keyframes cs-dance{
+            0%  {transform:rotate(-12deg) scale(0.93);}
+            25% {transform:rotate(10deg)  scale(1.09);}
+            50% {transform:rotate(-6deg)  scale(1.03);}
+            75% {transform:rotate(14deg)  scale(0.97);}
+            100%{transform:rotate(-12deg) scale(0.93);}
+          }
+          .star-pulse{transform-origin:75px 27px;animation:star-twinkle 1.6s ease-in-out infinite;}
+          @keyframes star-twinkle{
+            0%,100%{transform:scale(1)   rotate(0deg);  opacity:1;}
+            50%    {transform:scale(1.4) rotate(18deg); opacity:0.7;}
+          }
+        </style>
+        <g class="cs-group">
+          <path d="M50 14 A36 36 0 1 0 50 86 A26 26 0 1 1 50 14Z" fill="#ffd700"/>
+          <g class="star-pulse">
+            <polygon points="75,17 77.8,25.5 87,25.5 79.6,30.8 82.4,39.3 75,34 67.6,39.3 70.4,30.8 63,25.5 72.2,25.5" fill="#ffd700"/>
+          </g>
+        </g>
+      </svg>
     </div>
     <div class="app-title">مترجم صوتي</div>
-    <div class="app-sub">اضغط على الدرّاپو · يترجم · يتكلّم</div>
+    <div class="app-sub">اضغط على المايكروفون · يترجم · يتكلّم</div>
     <div style="font-size:10px;color:rgba(255,215,0,0.4);margin-top:4px;letter-spacing:0.2em;">✦ وَقْفٌ عَلَى رُوحِ جَدِّي العَزِيز صَلاحُ الدِّين غَالِب ✦</div>
     <div class="header-line"></div>
     <div class="stars-row">
@@ -267,8 +283,9 @@ body{
     </button>
   </div>
 
-  <div class="state-msg" id="stateMsg"></div>
+  <div class="state-msg" id="stateMsg">🎤 اضغط على المايكروفون متاعك للكلام</div>
 
+  <div class="ornament-divider">✦ 🎙 ★ 🎙 ✦</div>
 
   <!-- CARD TN -->
   <div class="card">
@@ -289,7 +306,7 @@ body{
   </div>
 
   <div class="note">
-    <b>كيف يعمل:</b> اضغط 🇹🇳 وتكلّم بالتونسي ← يترجم للتركي ويقرأه بصوت عالٍ. اضغط 🇹🇷 وتكلّم بالتركي ← يترجم للتونسي ويقرأه. كل واحد يضغط على دراپو بلاده.<br>
+    <b>كيف يعمل:</b> اضغط 🎤 تونسي وتكلّم بالتونسي ← يترجم للتركي ويقرأه بصوت عالٍ. اضغط 🎤 تركي وتكلّم بالتركي ← يترجم للتونسي ويقرأه. كل واحد يضغط على مايكروفون بلاده.<br>
     يعمل بشكل أفضل على <b>Chrome (أندرويد / كمبيوتر)</b>.
   </div>
 
@@ -350,7 +367,7 @@ async function handleFlag(id){
     rec&&rec.stop();
     speechSynthesis.cancel();
     setFlag('TN',''); setFlag('TR','');
-    $('stateMsg').textContent='🇹🇳 اضغط على دراپو متاعك للكلام';
+    $('stateMsg').textContent='🎤 اضغط على المايكروفون متاعك للكلام';
     return;
   }
   if(!SR){ $('stateMsg').textContent='❌ يتطلب Chrome للتعرف على الصوت'; return; }
@@ -411,19 +428,13 @@ async function handleFlag(id){
 
   busy=false;
   setFlag(id,''); setFlag(otherId,'');
-  $('stateMsg').textContent='✅ دورك الآن — اضغط على دراپو متاعك';
+  $('stateMsg').textContent='✅ دورك الآن — اضغط على المايكروفون متاعك';
 }
 
 $('flagTN').onclick=()=>handleFlag('TN');
 $('flagTR').onclick=()=>handleFlag('TR');
 $('copyA').onclick=()=>{ const t=$('textA').textContent; if(t&&t!=='—') navigator.clipboard&&navigator.clipboard.writeText(t); };
 $('copyB').onclick=()=>{ const t=$('textB').textContent; if(t&&t!=='—') navigator.clipboard&&navigator.clipboard.writeText(t); };
-</script>
-
-<script>
-if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('sw.js').catch(()=>{});
-}
 </script>
 </body>
 </html>
