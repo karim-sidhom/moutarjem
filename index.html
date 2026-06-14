@@ -5,6 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>مترجم صوتي</title>
 <meta name="theme-color" content="#020b2e">
+<link rel="manifest" href="manifest.json">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="مترجم صوتي">
+<link rel="apple-touch-icon" href="icon-192.png">
 <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Tajawal:wght@300;400;500;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -261,9 +267,8 @@ body{
     </button>
   </div>
 
-  <div class="state-msg" id="stateMsg">🇹🇳 اضغط على دراپو متاعك للكلام</div>
+  <div class="state-msg" id="stateMsg"></div>
 
-  <div class="ornament-divider">✦ 🎙 ★ 🎙 ✦</div>
 
   <!-- CARD TN -->
   <div class="card">
@@ -413,6 +418,12 @@ $('flagTN').onclick=()=>handleFlag('TN');
 $('flagTR').onclick=()=>handleFlag('TR');
 $('copyA').onclick=()=>{ const t=$('textA').textContent; if(t&&t!=='—') navigator.clipboard&&navigator.clipboard.writeText(t); };
 $('copyB').onclick=()=>{ const t=$('textB').textContent; if(t&&t!=='—') navigator.clipboard&&navigator.clipboard.writeText(t); };
+</script>
+
+<script>
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('sw.js').catch(()=>{});
+}
 </script>
 </body>
 </html>
